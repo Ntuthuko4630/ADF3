@@ -10,8 +10,8 @@
 		"annotations": [],
 		"type": "SqlServer",
 		"typeProperties": {
-			"connectionString": "integrated security=False;data source=10.111.240.196;initial catalog=EDB_ABI_001;user id=GlobalSupport",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5NThkMDc3Yi0yOTU5LTQzNTctYWJmMS0yMzYyMjJlNDk0MzEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"connectionString": "integrated security=False;data source=@{linkedService().ServerName};initial catalog=EDB_ABI_001;user id=GlobalSupport",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjMDNiYzg1ZC1hZWVmLTQyOTctOWM4NC04Y2FmYmRiZDk4NmMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "OnPremise",
