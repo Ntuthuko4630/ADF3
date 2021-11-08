@@ -1,16 +1,15 @@
 {
-	"name": "dsPhysChem_IBY",
+	"name": "dsPhysyChemPROS",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "PhysChem",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"ServerName": "10.111.240.196"
+				"ServerName": "10.111.240.178"
 			}
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": []
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }

@@ -1,5 +1,5 @@
 {
-	"name": "sPhysChem",
+	"name": "sPhysChemCHAM",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "lsPhysChemSink",
@@ -76,8 +76,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "PhyChemIBY_Staging"
+			"table": "PhyChemCHAM_Staging"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }
