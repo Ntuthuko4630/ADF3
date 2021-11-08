@@ -355,6 +355,58 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"sqlReaderStoredProcedureName": "[dbo].[PhysChemBCI_NEW]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "dsPhysChemNEW",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sPhysChemNEW",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Prospecton Data",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Newlands Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -362,7 +414,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dsPhysChemNEW",
+						"referenceName": "dsPhysyChemPROS",
 						"type": "DatasetReference"
 					}
 				]
