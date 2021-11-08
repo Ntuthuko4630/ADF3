@@ -1,0 +1,82 @@
+{
+	"name": "sPhyshemALR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lsPhysChemSink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Parameter",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ParameterCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Brand",
+				"type": "nvarchar"
+			},
+			{
+				"name": "KPI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProcessGroup",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProcessGroupGlobal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProcessArea",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VALUE",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "TARGET",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "EnteredDateTime",
+				"type": "datetimeoffset",
+				"scale": 3
+			},
+			{
+				"name": "SampleDateTime",
+				"type": "datetimeoffset",
+				"scale": 3
+			},
+			{
+				"name": "DueDateTime",
+				"type": "datetimeoffset",
+				"scale": 3
+			},
+			{
+				"name": "ParameterType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SpecStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SiteID",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "PhyChemALR_Staging"
+		}
+	}
+}
