@@ -303,6 +303,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"sqlReaderStoredProcedureName": "[dbo].[PhysChemBCI_POL]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
