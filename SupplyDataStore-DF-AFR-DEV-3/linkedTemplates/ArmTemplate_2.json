@@ -1,0 +1,1009 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "SupplyDataStore-DF-AFR-DEV-3"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/REF_MetricLookup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Fact Lookups"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pkiMetric",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "MetricLU",
+						"type": "varchar"
+					},
+					{
+						"name": "CheckCount",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "vwMetricLookup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REF_Month')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Target Lookups"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Name",
+						"type": "varchar"
+					},
+					{
+						"name": "MonthN",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "vwMonthLookup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REF_PackLineLookup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Fact Lookups"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pkiPackLine",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "fkSite",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "LineName",
+						"type": "varchar"
+					},
+					{
+						"name": "CheckCount",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "vwPackLineLookup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REF_SiteLookup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Target Lookups"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SiteName",
+						"type": "varchar"
+					},
+					{
+						"name": "SiteLookup",
+						"type": "varchar"
+					},
+					{
+						"name": "fkSite",
+						"type": "bigint",
+						"precision": 19
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "vwSiteLookup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REF_SiteLookup2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Duplicate of the site lookup for the targets",
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Fact Lookups"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SiteName",
+						"type": "varchar"
+					},
+					{
+						"name": "SiteLookup",
+						"type": "varchar"
+					},
+					{
+						"name": "fkSite",
+						"type": "bigint",
+						"precision": 19
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "vwSiteLookup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REF_TargetMapping')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Target Lookups"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pkiTargetMapping",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "TargetSourceName",
+						"type": "varchar"
+					},
+					{
+						"name": "MeasureName",
+						"type": "varchar"
+					},
+					{
+						"name": "fkMeasure",
+						"type": "bigint",
+						"precision": 19
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "TargetMapping"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REF_TimeLineLookup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Fact Lookups"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pkiTimeLine",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TimeLine",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "vwTimelineLookup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/REF_Year')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Target Lookups"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "FYear",
+						"type": "varchar"
+					},
+					{
+						"name": "NYear",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "vwYearLookup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SDLeversOut')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Fact Staging ETL1"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pkID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "BrewName",
+						"type": "varchar"
+					},
+					{
+						"name": "DateStarting",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "LastUpdated",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "TimeLine",
+						"type": "char"
+					},
+					{
+						"name": "Section",
+						"type": "varchar"
+					},
+					{
+						"name": "FlowMeasure",
+						"type": "varchar"
+					},
+					{
+						"name": "Area",
+						"type": "varchar"
+					},
+					{
+						"name": "UOM",
+						"type": "varchar"
+					},
+					{
+						"name": "Value",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Batch",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "SD_Levers_Output"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SDLeversOut2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Fact Staging ETL1"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "BrewName",
+						"type": "varchar"
+					},
+					{
+						"name": "DateStarting",
+						"type": "date"
+					},
+					{
+						"name": "LastUpdated_Source",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "TimeLine",
+						"type": "varchar"
+					},
+					{
+						"name": "Section",
+						"type": "varchar"
+					},
+					{
+						"name": "FlowMeasure",
+						"type": "varchar"
+					},
+					{
+						"name": "Area",
+						"type": "varchar"
+					},
+					{
+						"name": "UOM",
+						"type": "varchar"
+					},
+					{
+						"name": "Value",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "LastUpdated",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "SourceLine",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "PeriodDate",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "ODS",
+					"table": "vwSD_Levers_ETL0"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceIDLookup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Fact Lookups"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pkiFactKPI",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "SourceLine",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "LastUpdated",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "vwSourceIDLookup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TargetSource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SupplyFiles",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureFileStorageLocation",
+						"fileName": "C21 Targets.xlsx",
+						"folderPath": "InUse"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Concatenate",
+						"type": "String"
+					},
+					{
+						"name": "BU Region",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Plant",
+						"type": "String"
+					},
+					{
+						"name": "Plt Code ",
+						"type": "String"
+					},
+					{
+						"name": "Fin Year",
+						"type": "String"
+					},
+					{
+						"name": "Month",
+						"type": "String"
+					},
+					{
+						"name": "MTD/YTD",
+						"type": "String"
+					},
+					{
+						"name": "Version",
+						"type": "String"
+					},
+					{
+						"name": "KPI Name",
+						"type": "String"
+					},
+					{
+						"name": "Target",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TargetSource_2020')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TargetSource",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Targets"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"location": {
+						"type": "AzureFileStorageLocation",
+						"fileName": "C20 Targets.xlsx",
+						"folderPath": "InUse"
+					},
+					"sheetIndex": 0,
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TargetSource_2021')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TargetSource",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Targets"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureFileStorageLocation",
+						"fileName": "C21 Targets.xlsx",
+						"folderPath": "InUse"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TargetStaging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "DataStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pkiTargetStaging",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Concatenate",
+						"type": "varchar"
+					},
+					{
+						"name": "BU Region",
+						"type": "varchar"
+					},
+					{
+						"name": "BU Region 2",
+						"type": "varchar"
+					},
+					{
+						"name": "BURegion",
+						"type": "varchar"
+					},
+					{
+						"name": "Country",
+						"type": "varchar"
+					},
+					{
+						"name": "Plant",
+						"type": "varchar"
+					},
+					{
+						"name": "Plt Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Fin Year",
+						"type": "varchar"
+					},
+					{
+						"name": "Month",
+						"type": "varchar"
+					},
+					{
+						"name": "MTD/YTD",
+						"type": "varchar"
+					},
+					{
+						"name": "Version",
+						"type": "varchar"
+					},
+					{
+						"name": "KPI Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Target",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "ODS",
+					"table": "TargetStaging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TestData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SupplyFiles",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Debug"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet2",
+					"location": {
+						"type": "AzureFileStorageLocation",
+						"fileName": "TestData.xlsx",
+						"folderPath": "Dev"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TestIRCopySink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SupplyBlobStore",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Test"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "testdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dboTestTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Debug"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pki",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "FinYear",
+						"type": "varchar"
+					},
+					{
+						"name": "Month",
+						"type": "varchar"
+					},
+					{
+						"name": "fkDate",
+						"type": "date"
+					},
+					{
+						"name": "fkDateTime",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "fkSite",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "fkTimeLine",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TestTable1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dboTestTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Debug"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pki",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "FinYear",
+						"type": "varchar"
+					},
+					{
+						"name": "Month",
+						"type": "varchar"
+					},
+					{
+						"name": "fkDate",
+						"type": "date"
+					},
+					{
+						"name": "fkDateTime",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "fkSite",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "fkTimeLine",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "TestTable2"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dsLookupMapping')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Packaging Efficiency ETL"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		}
+	]
+}

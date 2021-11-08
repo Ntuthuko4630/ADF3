@@ -1,0 +1,1208 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "SupplyDataStore-DF-AFR-DEV-3"
+		},
+		"PhysChem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PhysChem'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/sPhysChem')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "lsPhysChemSink",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Parameter",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParameterCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Brand",
+						"type": "nvarchar"
+					},
+					{
+						"name": "KPI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProcessGroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProcessGroupGlobal",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProcessArea",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VALUE",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "TARGET",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "EnteredDateTime",
+						"type": "datetimeoffset",
+						"scale": 3
+					},
+					{
+						"name": "SampleDateTime",
+						"type": "datetimeoffset",
+						"scale": 3
+					},
+					{
+						"name": "DueDateTime",
+						"type": "datetimeoffset",
+						"scale": 3
+					},
+					{
+						"name": "ParameterType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SpecStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SiteID",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PhyChemIBY_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sPhysChemCHAM')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "lsPhysChemSink",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Parameter",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParameterCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Brand",
+						"type": "nvarchar"
+					},
+					{
+						"name": "KPI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProcessGroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProcessGroupGlobal",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProcessArea",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VALUE",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "TARGET",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "EnteredDateTime",
+						"type": "datetimeoffset",
+						"scale": 3
+					},
+					{
+						"name": "SampleDateTime",
+						"type": "datetimeoffset",
+						"scale": 3
+					},
+					{
+						"name": "DueDateTime",
+						"type": "datetimeoffset",
+						"scale": 3
+					},
+					{
+						"name": "ParameterType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SpecStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SiteID",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PhyChemCHAM_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sPhysChemNEW')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "lsPhysChemSink",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PhyChemNEW_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sPhysChemPOL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "lsPhysChemSink",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PhyChemPOL_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sPhysChemPROS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "lsPhysChemSink",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PhyChemPROS_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sPhysChemROS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "lsPhysChemSink",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PhyChemROS_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sPhyshemALR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "lsPhysChemSink",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Parameter",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ParameterCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Brand",
+						"type": "nvarchar"
+					},
+					{
+						"name": "KPI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProcessGroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProcessGroupGlobal",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProcessArea",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VALUE",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "TARGET",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "EnteredDateTime",
+						"type": "datetimeoffset",
+						"scale": 3
+					},
+					{
+						"name": "SampleDateTime",
+						"type": "datetimeoffset",
+						"scale": 3
+					},
+					{
+						"name": "DueDateTime",
+						"type": "datetimeoffset",
+						"scale": 3
+					},
+					{
+						"name": "ParameterType",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SpecStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SiteID",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PhyChemALR_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/vwDateAdjustLookup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Indicates whether week data should shift by 1 day to align ROA and SA week ends",
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Fact Staging ETL1"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SiteName",
+						"type": "varchar"
+					},
+					{
+						"name": "DateAdjust",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "REF",
+					"table": "vwDateAdjustLookup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PhysChem')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"ServerName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('PhysChem_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "OnPremise",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BlobRead')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "KPI_NAME ",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "KPI_READ",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "KPI_CODE ",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "KPI_NAME",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "BlobRead1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "KPILookup",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Dev"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-06-02T10:03:32Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dynamic Backup Child')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Dynamic Child Backup Activity",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DynBackupSource",
+								"type": "DatasetReference",
+								"parameters": {
+									"Table": {
+										"value": "@pipeline().parameters.Table",
+										"type": "Expression"
+									},
+									"Schema": {
+										"value": "@pipeline().parameters.Schema",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DynBackupSink",
+								"type": "DatasetReference",
+								"parameters": {
+									"Schema": {
+										"value": "@pipeline().parameters.Schema",
+										"type": "Expression"
+									},
+									"Table": {
+										"value": "@pipeline().parameters.Table",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"Schema": {
+						"type": "string"
+					},
+					"Table": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Dynamic Backup"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-06-02T10:03:35Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TargetsETL1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Targets Source",
+						"description": "Testing GIT",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Concatenate",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Concatenate",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BU Region",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "BU Region",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Country",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Plant",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Plant",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Plt Code ",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Plt Code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Fin Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fin Year",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Month",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Month",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MTD/YTD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MTD/YTD",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Version",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Version",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "KPI Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "KPI Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Target",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Target",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TargetSource",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "TargetStaging",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Dev"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-06-02T10:03:31Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/testdata')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Test data for ODS.SDLevers from TestData\n",
+				"activities": [
+					{
+						"name": "Copy Test Data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table ODS.SDLevers_Test",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "pkiSDLevers",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "pkiSDLevers",
+											"type": "Int64",
+											"physicalType": "bigint"
+										}
+									},
+									{
+										"source": {
+											"name": "BrewName",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "BrewName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DateStarting",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DateStarting",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									},
+									{
+										"source": {
+											"name": "LastUpdated_Source",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "LastUpdated_Source",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									},
+									{
+										"source": {
+											"name": "TimeLine",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "TimeLine",
+											"type": "String",
+											"physicalType": "char"
+										}
+									},
+									{
+										"source": {
+											"name": "Section",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Section",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FlowMeasure",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FlowMeasure",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Area",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Area",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "UOM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "UOM",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Value",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Value",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "fkBatchID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "fkBatchID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "LastUpdated",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "LastUpdated",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "LastUpdatedBy",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "LastUpdatedBy",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SourceLine",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SourceLine",
+											"type": "Int64",
+											"physicalType": "bigint"
+										}
+									},
+									{
+										"source": {
+											"name": "PeriodDate",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PeriodDate",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									},
+									{
+										"source": {
+											"name": "PeriodAdjust",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PeriodAdjust",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TestData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ODSTestData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Dev"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-06-02T10:03:32Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dsPhysChemCHAM')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PhysChem",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"ServerName": "10.111.240.116"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PhysChem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dsPhysChemNEW')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PhysChem",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"ServerName": "10.111.240.39"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PhysChem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dsPhysChemPOL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PhysChem",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"ServerName": "10.111.240.87"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PhysChem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dsPhysChemROS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PhysChem",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"ServerName": "10.111.240.139"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PhysChem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dsPhysChem_Alrode')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PhysChem",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"ServerName": "10.111.240.13"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PhysChem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dsPhysChem_IBY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PhysChem",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"ServerName": "10.111.240.196"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PhysChem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dsPhyshChem_ALR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PhysChem",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"ServerName": "10.111.240.13"
+					}
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PhysChem')]"
+			]
+		}
+	]
+}

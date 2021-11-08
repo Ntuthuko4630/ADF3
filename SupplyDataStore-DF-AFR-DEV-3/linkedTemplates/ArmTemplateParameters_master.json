@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "SupplyDataStore-DF-AFR-DEV-3"
+		},
+		"DataStore_connectionString": {
+			"value": ""
+		},
+		"PhysChem_connectionString": {
+			"value": ""
+		},
+		"ReferenceData_connectionString": {
+			"value": ""
+		},
+		"SupplyBlobStore_connectionString": {
+			"value": ""
+		},
+		"SupplyFiles_connectionString": {
+			"value": ""
+		},
+		"SupplyStorage_connectionString": {
+			"value": ""
+		},
+		"TargetSource_connectionString": {
+			"value": ""
+		},
+		"lsPhysChem_connectionString": {
+			"value": ""
+		},
+		"lsPhysChemSink_connectionString": {
+			"value": ""
+		},
+		"supplydatastore_server_connectionString": {
+			"value": ""
+		},
+		"OnPremise_properties_typeProperties_linkedInfo_resourceId": {
+			"value": "/subscriptions/15bcebd1-794e-49c6-9548-8a4a4357ee16/resourcegroups/SupplyDataStoreRG-RG-AFR-DEV/providers/Microsoft.DataFactory/factories/SupplyDataStore-DF-AFR-DEV-2/integrationruntimes/OnPremise"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
