@@ -76,7 +76,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "PhyChem_Staging"
+			"table": "PhyChemIBY_Staging"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
