@@ -1,0 +1,16 @@
+{
+	"name": "sPhysChemPOL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lsPhysChemSink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "PhyChemPOL_Staging"
+		}
+	}
+}
