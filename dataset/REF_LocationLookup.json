@@ -1,0 +1,51 @@
+{
+	"name": "REF_LocationLookup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Fact Lookups"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pkiLocation",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Division",
+				"type": "varchar"
+			},
+			{
+				"name": "Subdivision",
+				"type": "varchar"
+			},
+			{
+				"name": "Line",
+				"type": "varchar"
+			},
+			{
+				"name": "Brewhouse",
+				"type": "varchar"
+			},
+			{
+				"name": "LocationLookup",
+				"type": "varchar"
+			},
+			{
+				"name": "CheckCount",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "REF",
+			"table": "vwLocationLookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

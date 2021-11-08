@@ -1,0 +1,9 @@
+{
+	"name": "SupplyDataStore-DF-AFR-DEV-3",
+	"location": "southafricanorth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "08ba026a-ce68-4109-9bef-75c6a02c3424",
+		"tenantId": "cef04b19-7776-4a94-b89b-375c77a8f936"
+	}
+}

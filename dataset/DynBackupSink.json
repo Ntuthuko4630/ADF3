@@ -1,0 +1,44 @@
+{
+	"name": "DynBackupSink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SupplyBlobStore",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Schema": {
+				"type": "string",
+				"defaultValue": "placeholder"
+			},
+			"Table": {
+				"type": "string",
+				"defaultValue": "placeholder"
+			}
+		},
+		"folder": {
+			"name": "Dynamic Backup"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(\n   dataset().Table, \n  '-', \n  substring(convertFromUtc(utcnow(), 'South Africa Standard Time'), 0, 10), \n  '.csv'\n)",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Schema",
+					"type": "Expression"
+				},
+				"container": "backup"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

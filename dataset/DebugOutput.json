@@ -1,0 +1,45 @@
+{
+	"name": "DebugOutput",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Debug"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Plant",
+				"type": "varchar"
+			},
+			{
+				"name": "Fin Year",
+				"type": "varchar"
+			},
+			{
+				"name": "Month",
+				"type": "varchar"
+			},
+			{
+				"name": "MTD/YTD",
+				"type": "varchar"
+			},
+			{
+				"name": "KPI Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Target",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DebugOutput"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

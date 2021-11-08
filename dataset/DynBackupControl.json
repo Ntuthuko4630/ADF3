@@ -1,0 +1,16 @@
+{
+	"name": "DynBackupControl",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Dynamic Backup"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

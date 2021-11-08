@@ -1,0 +1,19 @@
+{
+	"name": "PowerQuery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "dboTestTable1",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> dboTestTable1",
+					"dataset": {
+						"referenceName": "dboTestTable1",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared dboTestTable1 = let\r\n  AdfDoc = Sql.Database(\"supplydatastoreserver.database.windows.net\", \"SupplyDataStore\"),\r\n  InputTable = AdfDoc{[Schema = \"dbo\", Item = \"TestTable1\"]}[Data]\r\nin\r\n  InputTable;\r\nshared UserQuery = let\r\n  Source = dboTestTable1\r\nin\r\n  Source;\r\n"
+		}
+	}
+}

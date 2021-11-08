@@ -1,0 +1,68 @@
+{
+	"name": "FactKPI_ETL2_copy2",
+	"properties": {
+		"activities": [
+			{
+				"name": "FactKPIStaging Flow",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DFFactKPI_ETL2_TEST",
+						"type": "DataFlowReference",
+						"parameters": {
+							"BatchNumber": "toLong(0)"
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "InsertFacts",
+				"description": "Insert facts from the fact staging table",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "FactKPIStaging Flow",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DW].[spInsertFacts]"
+				},
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Complete"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-06-02T10:03:41Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

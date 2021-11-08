@@ -1,0 +1,35 @@
+{
+	"name": "BlobRead1",
+	"properties": {
+		"description": "Test read from data store",
+		"linkedServiceName": {
+			"referenceName": "SupplyBlobStore",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Debug"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "KPI Name Mapping.xlsx",
+				"container": "testdata"
+			},
+			"sheetIndex": 0,
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "KPI_NAME ",
+				"type": "String"
+			},
+			{
+				"name": "KPI_CODE ",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

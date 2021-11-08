@@ -1,0 +1,30 @@
+{
+	"name": "REF_Month",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Target Lookups"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Name",
+				"type": "varchar"
+			},
+			{
+				"name": "MonthN",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "REF",
+			"table": "vwMonthLookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,219 @@
+{
+	"name": "DFFactKPI_ETL2_copy3",
+	"properties": {
+		"folder": {
+			"name": "Fact DF"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODS_SDLevers",
+						"type": "DatasetReference"
+					},
+					"name": "StagingTable"
+				},
+				{
+					"dataset": {
+						"referenceName": "SourceIDLookup",
+						"type": "DatasetReference"
+					},
+					"name": "SourceIDs"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_FactLookup",
+						"type": "DatasetReference"
+					},
+					"name": "FactLookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_MetricLookup",
+						"type": "DatasetReference"
+					},
+					"name": "MetricLookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_SiteLookup",
+						"type": "DatasetReference"
+					},
+					"name": "SIteLookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_LocationLookup",
+						"type": "DatasetReference"
+					},
+					"name": "LocationLookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_TimeLineLookup",
+						"type": "DatasetReference"
+					},
+					"name": "TimeLineLookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_PackLineLookup",
+						"type": "DatasetReference"
+					},
+					"name": "PackLineLookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_BrewhouseLookup",
+						"type": "DatasetReference"
+					},
+					"name": "BrewhouseLookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "DWFactKPIRead",
+						"type": "DatasetReference"
+					},
+					"name": "FactCopy"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DWFactKPI",
+						"type": "DatasetReference"
+					},
+					"name": "UpdateFact2",
+					"description": "Update DWFactKPI"
+				},
+				{
+					"dataset": {
+						"referenceName": "DWFactKPI",
+						"type": "DatasetReference"
+					},
+					"name": "UpdateFact1",
+					"description": "Update DWFactKPI"
+				},
+				{
+					"dataset": {
+						"referenceName": "DWFactKPIStaging",
+						"type": "DatasetReference"
+					},
+					"name": "InsertFactD"
+				},
+				{
+					"name": "SiteLookupCache"
+				},
+				{
+					"name": "MetricLookupCache"
+				},
+				{
+					"name": "LocationCache"
+				},
+				{
+					"name": "TimeLineCache"
+				},
+				{
+					"name": "PackLineCache"
+				},
+				{
+					"name": "BrewhouseCache"
+				},
+				{
+					"dataset": {
+						"referenceName": "DWFactKPIStaging",
+						"type": "DatasetReference"
+					},
+					"name": "InsertFactWM"
+				}
+			],
+			"transformations": [
+				{
+					"name": "UpdateRecords",
+					"description": "Input rows that match on SourceLine"
+				},
+				{
+					"name": "ExistingHash",
+					"description": "Hash of characterising fields to match WTD and MTD elements"
+				},
+				{
+					"name": "MarkUpdate1",
+					"description": "Update the value and lastupdated date"
+				},
+				{
+					"name": "InputHash",
+					"description": "Hash of elements to identify similar records"
+				},
+				{
+					"name": "NewRecords",
+					"description": "Input rows that do not match on SourceLine\nNOTE Exists does not join the subquery"
+				},
+				{
+					"name": "SplitTimeLines",
+					"description": "Split MTD and WTD records from DAY records"
+				},
+				{
+					"name": "MarkUpdate2",
+					"description": "Update the value, sourceline and lastupdated date"
+				},
+				{
+					"name": "Lookup1"
+				},
+				{
+					"name": "Select1",
+					"description": "pki and new value and lastupdated"
+				},
+				{
+					"name": "Select2",
+					"description": "PKI, and new sourceline, lastupdated and value"
+				},
+				{
+					"name": "KeyFromSourceline",
+					"description": "Look up the fact pki from the source line for matching source lines"
+				},
+				{
+					"name": "LookupCurrent",
+					"description": "Lookup primary key for matched record from sourceline"
+				},
+				{
+					"name": "LookupKeys"
+				},
+				{
+					"name": "LocLookup"
+				},
+				{
+					"name": "PackLineKey"
+				},
+				{
+					"name": "BrewhouseKey"
+				},
+				{
+					"name": "MarkInsert"
+				},
+				{
+					"name": "ConditionalSplit1"
+				},
+				{
+					"name": "Select3"
+				},
+				{
+					"name": "LookupKeys2"
+				},
+				{
+					"name": "MarkInsert1"
+				},
+				{
+					"name": "Select4"
+				},
+				{
+					"name": "Select5"
+				},
+				{
+					"name": "Select6"
+				}
+			],
+			"script": "source(output(\n\t\tBrewName as string,\n\t\tDateStarting as date,\n\t\tTimeLine as string,\n\t\tFlowMeasure as string,\n\t\tSection as string,\n\t\tArea as string,\n\t\tValue as double,\n\t\tLine as string,\n\t\tBrewhouse as string,\n\t\tMetricName as string,\n\t\tPeriodDate as date,\n\t\tLastUpdated as timestamp,\n\t\tpkiSDLevers as long,\n\t\tfkBatchID as integer,\n\t\tSourceLine as long\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StagingTable\nsource(output(\n\t\tpkiFactKPI as long,\n\t\tSourceLine as long,\n\t\tLastUpdated as timestamp\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SourceIDs\nsource(output(\n\t\tpkiFactKPI as long,\n\t\tfkDate as date,\n\t\tBrewName as string,\n\t\tTimeLine as string,\n\t\tSubdivision as string,\n\t\tLine as string,\n\t\tBrewhouse as string,\n\t\tLocationLookup as string,\n\t\tMetricName as string,\n\t\tSourceLine as long,\n\t\tLastUpdated as timestamp\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> FactLookup\nsource(output(\n\t\tpkiMetric as long,\n\t\tMetricLU as string,\n\t\tCheckCount as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> MetricLookup\nsource(output(\n\t\tSiteName as string,\n\t\tSiteLookup as string,\n\t\tfkSite as long\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SIteLookup\nsource(output(\n\t\tpkiLocation as long,\n\t\tDivision as string,\n\t\tSubdivision as string,\n\t\tLine as string,\n\t\tBrewhouse as string,\n\t\tLocationLookup as string,\n\t\tCheckCount as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> LocationLookup\nsource(output(\n\t\tpkiTimeLine as integer,\n\t\tTimeLine as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> TimeLineLookup\nsource(output(\n\t\tpkiPackLine as long,\n\t\tfkSite as long,\n\t\tLineName as string,\n\t\tCheckCount as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> PackLineLookup\nsource(output(\n\t\tpkiBrewhouse as long,\n\t\tfkSite as long,\n\t\tBrewhouseName as string,\n\t\tCheckCount as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> BrewhouseLookup\nsource(output(\n\t\tpkiFactKPI as long,\n\t\tfkDate as date,\n\t\tfkSite as long,\n\t\tfkLocation as long,\n\t\tfkPackLine as long,\n\t\tfkBrewhouse as long,\n\t\tfkMetric as long,\n\t\tfkDomain as integer,\n\t\tfkTimeLine as integer,\n\t\tValue as double,\n\t\tWeightingFactor as double,\n\t\tTarget as double,\n\t\tTargetWeightingFactor as double,\n\t\tSourceLine as long,\n\t\tfkBatch as long,\n\t\tLastUpdated as timestamp,\n\t\tDisable as boolean\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> FactCopy\nInputHash, SourceIDs exists(StagingTable@SourceLine == SourceIDs@SourceLine,\n\tnegate:false,\n\tbroadcast: 'auto')~> UpdateRecords\nFactLookup derive(hashExisting = md5(toString(fkDate), BrewName, TimeLine, Line, Brewhouse, MetricName)) ~> ExistingHash\nSelect6 alterRow(updateIf(true())) ~> MarkUpdate1\nStagingTable derive(TMTimeLine = (trim(TimeLine) == 'MTD') || (trim(TimeLine) == 'YTD'),\n\t\tInputHash = md5(toString(PeriodDate), BrewName, TimeLine, Line, Brewhouse, MetricName),\n\t\tLocLookup1 = lower(trim(Area) + trim(coalesce(Line, '')) + trim(coalesce(Brewhouse, ''))),\n\t\tLineLookup = toString(SiteLookupCache#lookup(BrewName).fkSite) + '|' + Line,\n\t\tBrewhouseLookup = toString(SiteLookupCache#lookup(BrewName).fkSite) + '|' + Brewhouse,\n\t\tfkDate = PeriodDate) ~> InputHash\nInputHash, SourceIDs exists(StagingTable@SourceLine == SourceIDs@SourceLine,\n\tnegate:true,\n\tbroadcast: 'auto')~> NewRecords\nNewRecords split((trim(TimeLine) == \"MTD\") || (trim(TimeLine) == \"WTD\"),\n\tdisjoint: false) ~> SplitTimeLines@(MTDWTDTimeLines, DAYTimeLine)\nConditionalSplit1@FuzzyMatched alterRow(updateIf(true())) ~> MarkUpdate2\nSplitTimeLines@MTDWTDTimeLines, ExistingHash lookup(InputHash == hashExisting,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup1\nMarkUpdate1 select(mapColumn(\n\t\tpkiFactKPI,\n\t\tLastUpdated,\n\t\tValue\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Select1\nMarkUpdate2 select(mapColumn(\n\t\tpkiFactKPI,\n\t\tSourceLine,\n\t\tLastUpdated,\n\t\tValue\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Select2\nFactLookup select(mapColumn(\n\t\tpkiFactKPI,\n\t\tfkDate,\n\t\tBrewName,\n\t\tTimeLine,\n\t\tSubdivision,\n\t\tLine,\n\t\tBrewhouse,\n\t\tLocationLookup,\n\t\tMetricName,\n\t\tSourceLine,\n\t\tLastUpdated\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> KeyFromSourceline\nUpdateRecords, FactCopy lookup(StagingTable@SourceLine == FactCopy@SourceLine,\n\tmultiple: true,\n\tbroadcast: 'auto',\n\tpickup: 'any')~> LookupCurrent\nSplitTimeLines@DAYTimeLine derive(fkSite = SiteLookupCache#lookup(BrewName).fkSite,\n\t\tfkMetric = MetricLookupCache#lookup(MetricName).fkMetric,\n\t\tfkLocation = LocationCache#lookup(LocLookup1).fkLocation,\n\t\tfkTimeLine = TimeLineCache#lookup(TimeLine).fkTimeLine,\n\t\tfkPackLine = PackLineCache#lookup(LineLookup).fkPackLine,\n\t\tfkBrewhouse = BrewhouseCache#lookup(BrewhouseLookup).fkBrewhouse,\n\t\tfkDomain = 1,\n\t\tfkBatchL = toLong(0),\n\t\tWeightingFactor = toDouble(0),\n\t\tTarget = toDouble(0),\n\t\tTargetWeightingFactor = toDouble(0),\n\t\tDisable = false()) ~> LookupKeys\nLocationLookup derive(LocLookup = lower(trim(Subdivision) + trim(coalesce(Line, '')) + trim(coalesce(Brewhouse, '')))) ~> LocLookup\nPackLineLookup derive(LineKey = toString(fkSite) + '|' + LineName) ~> PackLineKey\nBrewhouseLookup derive(BrewhouseKey = toString(fkSite) + '|' + BrewhouseName) ~> BrewhouseKey\nLookupKeys alterRow(insertIf(true())) ~> MarkInsert\nSelect3 split(InputHash == hashExisting,\n\tdisjoint: false) ~> ConditionalSplit1@(FuzzyMatched, FuzzyUnmatched)\nLookup1 select(mapColumn(\n\t\tBrewName = SplitTimeLines@MTDWTDTimeLines@BrewName,\n\t\tDateStarting,\n\t\tTimeLine = SplitTimeLines@MTDWTDTimeLines@TimeLine,\n\t\tFlowMeasure,\n\t\tSection,\n\t\tArea,\n\t\tValue,\n\t\tLine = SplitTimeLines@MTDWTDTimeLines@Line,\n\t\tBrewhouse = SplitTimeLines@MTDWTDTimeLines@Brewhouse,\n\t\tMetricName = SplitTimeLines@MTDWTDTimeLines@MetricName,\n\t\tPeriodDate,\n\t\tLastUpdated = SplitTimeLines@MTDWTDTimeLines@LastUpdated,\n\t\tfkBatchID,\n\t\tSourceLine = SplitTimeLines@MTDWTDTimeLines@SourceLine,\n\t\tInputHash,\n\t\tpkiFactKPI,\n\t\tfkDate = SplitTimeLines@MTDWTDTimeLines@fkDate,\n\t\thashExisting,\n\t\tLocLookup1,\n\t\tLineLookup,\n\t\tBrewhouseLookup\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nConditionalSplit1@FuzzyUnmatched derive(fkSite = SiteLookupCache#lookup(BrewName).fkSite,\n\t\tfkMetric = MetricLookupCache#lookup(MetricName).fkMetric,\n\t\tfkLocation = LocationCache#lookup(LocLookup1).fkLocation,\n\t\tfkTimeLine = TimeLineCache#lookup(TimeLine).fkTimeLine,\n\t\tfkPackLine = PackLineCache#lookup(LineLookup).fkPackLine,\n\t\tfkBrewhouse = BrewhouseCache#lookup(BrewhouseLookup).fkBrewhouse,\n\t\tfkDomain = 1,\n\t\tfkBatchL = toLong(0),\n\t\tWeightingFactor = toDouble(0),\n\t\tTarget = toDouble(0),\n\t\tTargetWeightingFactor = toDouble(0),\n\t\tDisable = false()) ~> LookupKeys2\nLookupKeys2 alterRow(insertIf(true())) ~> MarkInsert1\nMarkInsert1 select(mapColumn(\n\t\tfkDate,\n\t\tfkSite,\n\t\tfkLocation,\n\t\tfkPackLine,\n\t\tfkBrewhouse,\n\t\tfkMetric,\n\t\tfkDomain,\n\t\tfkTimeLine,\n\t\tValue,\n\t\tWeightingFactor,\n\t\tTarget,\n\t\tTargetWeightingFactor,\n\t\tSourceLine,\n\t\tfkBatch = fkBatchL,\n\t\tLastUpdated,\n\t\tDisable\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Select4\nMarkInsert select(mapColumn(\n\t\tfkDate,\n\t\tfkSite,\n\t\tfkLocation,\n\t\tfkPackLine,\n\t\tfkBrewhouse,\n\t\tfkMetric,\n\t\tfkDomain,\n\t\tfkTimeLine,\n\t\tValue,\n\t\tWeightingFactor,\n\t\tTarget,\n\t\tTargetWeightingFactor,\n\t\tSourceLine,\n\t\tfkBatch = fkBatchL,\n\t\tLastUpdated,\n\t\tDisable\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Select5\nLookupCurrent select(mapColumn(\n\t\tpkiFactKPI,\n\t\tfkDate = FactCopy@fkDate,\n\t\tfkSite,\n\t\tfkLocation,\n\t\tfkPackLine,\n\t\tfkBrewhouse,\n\t\tfkMetric,\n\t\tfkDomain,\n\t\tfkTimeLine,\n\t\tValue = StagingTable@Value,\n\t\tWeightingFactor,\n\t\tTarget,\n\t\tTargetWeightingFactor,\n\t\tSourceLine = FactCopy@SourceLine,\n\t\tfkBatch = fkBatchID,\n\t\tLastUpdated = StagingTable@LastUpdated,\n\t\tDisable\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Select6\nSelect1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tpkiFactKPI as long,\n\t\tfkDate as date,\n\t\tfkSite as long,\n\t\tfkLocation as long,\n\t\tfkPackLine as long,\n\t\tfkBrewhouse as long,\n\t\tfkMetric as long,\n\t\tfkDomain as integer,\n\t\tfkTimeLine as integer,\n\t\tValue as double,\n\t\tWeightingFactor as double,\n\t\tTarget as double,\n\t\tTargetWeightingFactor as double,\n\t\tSourceLine as long,\n\t\tfkBatch as long,\n\t\tLastUpdated as timestamp,\n\t\tDisable as boolean\n\t),\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['pkiFactKPI'],\n\tskipKeyWrites:true,\n\tformat: 'table',\n\tsaveOrder: 2,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tpkiFactKPI,\n\t\tLastUpdated,\n\t\tValue\n\t)) ~> UpdateFact2\nSelect2 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tpkiFactKPI as long,\n\t\tfkDate as date,\n\t\tfkSite as long,\n\t\tfkLocation as long,\n\t\tfkPackLine as long,\n\t\tfkBrewhouse as long,\n\t\tfkMetric as long,\n\t\tfkDomain as integer,\n\t\tfkTimeLine as integer,\n\t\tValue as double,\n\t\tWeightingFactor as double,\n\t\tTarget as double,\n\t\tTargetWeightingFactor as double,\n\t\tSourceLine as long,\n\t\tfkBatch as long,\n\t\tLastUpdated as timestamp,\n\t\tDisable as boolean\n\t),\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['pkiFactKPI'],\n\tskipKeyWrites:true,\n\tformat: 'table',\n\tsaveOrder: 3,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tpkiFactKPI,\n\t\tValue,\n\t\tSourceLine,\n\t\tLastUpdated\n\t)) ~> UpdateFact1\nSelect5 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tfkDate as date,\n\t\tfkSite as long,\n\t\tfkLocation as long,\n\t\tfkPackLine as long,\n\t\tfkBrewhouse as long,\n\t\tfkMetric as long,\n\t\tfkDomain as integer,\n\t\tfkTimeLine as integer,\n\t\tValue as double,\n\t\tWeightingFactor as double,\n\t\tTarget as double,\n\t\tTargetWeightingFactor as double,\n\t\tSourceLine as long,\n\t\tfkBatch as long,\n\t\tLastUpdated as timestamp,\n\t\tDisable as boolean\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tsaveOrder: 4,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tfkDate,\n\t\tfkSite,\n\t\tfkLocation,\n\t\tfkPackLine,\n\t\tfkBrewhouse,\n\t\tfkMetric,\n\t\tfkDomain,\n\t\tfkTimeLine,\n\t\tValue,\n\t\tWeightingFactor,\n\t\tTarget,\n\t\tTargetWeightingFactor,\n\t\tSourceLine,\n\t\tfkBatch,\n\t\tLastUpdated,\n\t\tDisable\n\t)) ~> InsertFactD\nSIteLookup sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tkeys:['SiteLookup'],\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: 1,\n\tmapColumn(\n\t\tSiteLookup,\n\t\tfkSite\n\t)) ~> SiteLookupCache\nMetricLookup sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tkeys:['MetricLU'],\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: (1),\n\tmapColumn(\n\t\tfkMetric = pkiMetric,\n\t\tMetricLU\n\t)) ~> MetricLookupCache\nLocLookup sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tkeys:['LocationLookup'],\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: (1),\n\tmapColumn(\n\t\tfkLocation = pkiLocation,\n\t\tLocationLookup\n\t)) ~> LocationCache\nTimeLineLookup sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tkeys:['TimeLine'],\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: 1,\n\tmapColumn(\n\t\tfkTimeLine = pkiTimeLine,\n\t\tTimeLine\n\t)) ~> TimeLineCache\nPackLineKey sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tkeys:['LineKey'],\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: 1,\n\tmapColumn(\n\t\tfkPackLine = pkiPackLine,\n\t\tLineKey\n\t)) ~> PackLineCache\nBrewhouseKey sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tkeys:['BrewhouseKey'],\n\tstore: 'cache',\n\tformat: 'inline',\n\toutput: false,\n\tsaveOrder: 1,\n\tmapColumn(\n\t\tfkBrewhouse = pkiBrewhouse,\n\t\tBrewhouseKey\n\t)) ~> BrewhouseCache\nSelect4 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tfkDate as date,\n\t\tfkSite as long,\n\t\tfkLocation as long,\n\t\tfkPackLine as long,\n\t\tfkBrewhouse as long,\n\t\tfkMetric as long,\n\t\tfkDomain as integer,\n\t\tfkTimeLine as integer,\n\t\tValue as double,\n\t\tWeightingFactor as double,\n\t\tTarget as double,\n\t\tTargetWeightingFactor as double,\n\t\tSourceLine as long,\n\t\tfkBatch as long,\n\t\tLastUpdated as timestamp,\n\t\tDisable as boolean\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tsaveOrder: 5,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tfkDate,\n\t\tfkSite,\n\t\tfkLocation,\n\t\tfkPackLine,\n\t\tfkBrewhouse,\n\t\tfkMetric,\n\t\tfkDomain,\n\t\tfkTimeLine,\n\t\tValue,\n\t\tWeightingFactor,\n\t\tTarget,\n\t\tTargetWeightingFactor,\n\t\tSourceLine,\n\t\tfkBatch,\n\t\tLastUpdated,\n\t\tDisable\n\t)) ~> InsertFactWM"
+		}
+	}
+}

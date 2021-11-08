@@ -1,0 +1,12 @@
+{
+	"name": "ReferenceData",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureFileStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=africasupplysaafrdev;EndpointSuffix=core.windows.net;",
+			"fileShare": "referencedata"
+		}
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"name": "REF_Year",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Target Lookups"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "FYear",
+				"type": "varchar"
+			},
+			{
+				"name": "NYear",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "REF",
+			"table": "vwYearLookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,58 @@
+{
+	"name": "dboTestTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Debug"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pki",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "FinYear",
+				"type": "varchar"
+			},
+			{
+				"name": "Month",
+				"type": "varchar"
+			},
+			{
+				"name": "fkDate",
+				"type": "date"
+			},
+			{
+				"name": "fkDateTime",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Site",
+				"type": "varchar"
+			},
+			{
+				"name": "fkSite",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fkTimeLine",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "TestTable1"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,59 @@
+{
+	"name": "TargetSource_2021",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TargetSource",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Targets"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureFileStorageLocation",
+				"fileName": "C21 Targets.xlsx",
+				"folderPath": "InUse"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

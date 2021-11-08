@@ -1,0 +1,92 @@
+{
+	"name": "ODSTestData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Debug"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pkiSDLevers",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "BrewName",
+				"type": "varchar"
+			},
+			{
+				"name": "DateStarting",
+				"type": "date"
+			},
+			{
+				"name": "LastUpdated_Source",
+				"type": "date"
+			},
+			{
+				"name": "TimeLine",
+				"type": "char"
+			},
+			{
+				"name": "Section",
+				"type": "varchar"
+			},
+			{
+				"name": "FlowMeasure",
+				"type": "varchar"
+			},
+			{
+				"name": "Area",
+				"type": "varchar"
+			},
+			{
+				"name": "UOM",
+				"type": "varchar"
+			},
+			{
+				"name": "Value",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "fkBatchID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "LastUpdated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "LastUpdatedBy",
+				"type": "varchar"
+			},
+			{
+				"name": "SourceLine",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "PeriodDate",
+				"type": "date"
+			},
+			{
+				"name": "PeriodAdjust",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "SDLevers_Test"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

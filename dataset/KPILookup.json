@@ -1,0 +1,29 @@
+{
+	"name": "KPILookup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Debug"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "KPI_READ",
+				"type": "varchar"
+			},
+			{
+				"name": "KPI_NAME",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "KPILookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

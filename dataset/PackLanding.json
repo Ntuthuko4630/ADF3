@@ -1,0 +1,93 @@
+{
+	"name": "PackLanding",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Packaging Efficiency ETL"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pkID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "DateEnding",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "SiteRef",
+				"type": "varchar"
+			},
+			{
+				"name": "Timeline",
+				"type": "varchar"
+			},
+			{
+				"name": "NameL1",
+				"type": "varchar"
+			},
+			{
+				"name": "NameL2",
+				"type": "varchar"
+			},
+			{
+				"name": "NameL3",
+				"type": "varchar"
+			},
+			{
+				"name": "NameL4",
+				"type": "varchar"
+			},
+			{
+				"name": "NameL5",
+				"type": "varchar"
+			},
+			{
+				"name": "CatName",
+				"type": "varchar"
+			},
+			{
+				"name": "CatDescription",
+				"type": "varchar"
+			},
+			{
+				"name": "Sort",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Summary",
+				"type": "varchar"
+			},
+			{
+				"name": "Value",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "fkBatch",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "LastUpdated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "PackStaging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

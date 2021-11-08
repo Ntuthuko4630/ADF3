@@ -1,0 +1,35 @@
+{
+	"name": "LookupTestResSink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BrewName",
+				"type": "varchar"
+			},
+			{
+				"name": "TimeLine",
+				"type": "varchar"
+			},
+			{
+				"name": "FlowMeasure",
+				"type": "varchar"
+			},
+			{
+				"name": "fkSite",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "aaTestLookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

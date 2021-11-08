@@ -1,0 +1,65 @@
+{
+	"name": "TestDateCalcsFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dboTestTable1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_Month",
+						"type": "DatasetReference"
+					},
+					"name": "MonthLU"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_Year",
+						"type": "DatasetReference"
+					},
+					"name": "YearLU"
+				},
+				{
+					"dataset": {
+						"referenceName": "REF_SiteLookup",
+						"type": "DatasetReference"
+					},
+					"name": "SiteLU"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dboTestTable2",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "LookupYear"
+				},
+				{
+					"name": "LookupMonth"
+				},
+				{
+					"name": "LookupSite"
+				}
+			],
+			"script": "source(output(\n\t\tpki as long,\n\t\tFinYear as string,\n\t\tMonth as string,\n\t\tfkDate as date,\n\t\tfkDateTime as timestamp,\n\t\tSite as string,\n\t\tfkSite as long,\n\t\tfkTimeLine as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource(output(\n\t\tName as string,\n\t\tMonthN as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> MonthLU\nsource(output(\n\t\tFYear as string,\n\t\tNYear as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> YearLU\nsource(output(\n\t\tSiteName as string,\n\t\tSiteLookup as string,\n\t\tfkSite as long\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SiteLU\nLookupMonth derive(fkDate = toDate(addDays(addMonths(toTimestamp(toString(NYear) + '.01.01', 'yyyy.MM.dd'), MonthN), -1)),\n\t\tfkDateTime = addDays(addMonths(toTimestamp(toString(NYear) + '.01.01', 'yyyy.MM.dd'), MonthN), -1),\n\t\tfkTimeLine = 3) ~> DerivedColumn1\nsource1 select(mapColumn(\n\t\tFinYear,\n\t\tMonth,\n\t\tSite\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nLookupSite, YearLU lookup(FinYear == FYear,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupYear\nLookupYear, MonthLU lookup(Month == Name,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupMonth\nSelect1, SiteLU lookup(Site == SiteLookup,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupSite\nDerivedColumn1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tpki as long,\n\t\tFinYear as string,\n\t\tMonth as string,\n\t\tfkDate as date,\n\t\tfkDateTime as timestamp,\n\t\tSite as string,\n\t\tfkSite as long,\n\t\tfkTimeLine as integer\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tdateFormat:'yyyy/MM/dd',\n\ttimestampFormat:'yyyy.MM.dd HH:mm:ss',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tFinYear,\n\t\tMonth,\n\t\tfkDate,\n\t\tfkDateTime,\n\t\tSite,\n\t\tfkSite,\n\t\tfkTimeLine\n\t)) ~> sink1"
+		}
+	}
+}

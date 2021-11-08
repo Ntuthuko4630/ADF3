@@ -1,0 +1,21 @@
+{
+	"name": "PhysChem",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"ServerName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=10.111.240.196;initial catalog=EDB_ABI_001;user id=GlobalSupport",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5NThkMDc3Yi0yOTU5LTQzNTctYWJmMS0yMzYyMjJlNDk0MzEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "OnPremise",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

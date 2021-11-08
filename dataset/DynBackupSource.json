@@ -1,0 +1,36 @@
+{
+	"name": "DynBackupSource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Table": {
+				"type": "string",
+				"defaultValue": "placeholder"
+			},
+			"Schema": {
+				"type": "string",
+				"defaultValue": "placeholder"
+			}
+		},
+		"folder": {
+			"name": "Dynamic Backup"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().Schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().Table",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

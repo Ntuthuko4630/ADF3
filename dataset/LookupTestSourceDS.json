@@ -1,0 +1,84 @@
+{
+	"name": "LookupTestSourceDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BrewName",
+				"type": "varchar"
+			},
+			{
+				"name": "DateStarting",
+				"type": "date"
+			},
+			{
+				"name": "TimeLine",
+				"type": "varchar"
+			},
+			{
+				"name": "FlowMeasure",
+				"type": "varchar"
+			},
+			{
+				"name": "Section",
+				"type": "varchar"
+			},
+			{
+				"name": "Area",
+				"type": "varchar"
+			},
+			{
+				"name": "Value",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Line",
+				"type": "varchar"
+			},
+			{
+				"name": "Brewhouse",
+				"type": "varchar"
+			},
+			{
+				"name": "MetricName",
+				"type": "varchar"
+			},
+			{
+				"name": "PeriodDate",
+				"type": "date"
+			},
+			{
+				"name": "LastUpdated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "pkiSDLevers",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fkBatchID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SourceLine",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "vwSDLevers"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,258 @@
+{
+	"name": "testdata",
+	"properties": {
+		"description": "Test data for ODS.SDLevers from TestData\n",
+		"activities": [
+			{
+				"name": "Copy Test Data",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureFileStorageReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table ODS.SDLevers_Test",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "pkiSDLevers",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "pkiSDLevers",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
+									"name": "BrewName",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "BrewName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DateStarting",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DateStarting",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "LastUpdated_Source",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LastUpdated_Source",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "TimeLine",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TimeLine",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"source": {
+									"name": "Section",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Section",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FlowMeasure",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FlowMeasure",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Area",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Area",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "UOM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "UOM",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Value",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Value",
+									"type": "Double",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "fkBatchID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "fkBatchID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "LastUpdated",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LastUpdated",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "LastUpdatedBy",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LastUpdatedBy",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SourceLine",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SourceLine",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
+									"name": "PeriodDate",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PeriodDate",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "PeriodAdjust",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PeriodAdjust",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "TestData",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ODSTestData",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Dev"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-06-02T10:03:32Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

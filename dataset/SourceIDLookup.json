@@ -1,0 +1,37 @@
+{
+	"name": "SourceIDLookup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Fact Lookups"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pkiFactKPI",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "SourceLine",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "LastUpdated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "REF",
+			"table": "vwSourceIDLookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

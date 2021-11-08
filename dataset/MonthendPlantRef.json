@@ -1,0 +1,37 @@
+{
+	"name": "MonthendPlantRef",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ReferenceData",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Reference Data"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "PLANT_NAME",
+			"location": {
+				"type": "AzureFileStorageLocation",
+				"fileName": "MasterSitesRegions.xlsx"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

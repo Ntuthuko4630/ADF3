@@ -1,0 +1,69 @@
+{
+	"name": "REF_FactLookup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Fact Lookups"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pkiFactKPI",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fkDate",
+				"type": "date"
+			},
+			{
+				"name": "BrewName",
+				"type": "varchar"
+			},
+			{
+				"name": "TimeLine",
+				"type": "varchar"
+			},
+			{
+				"name": "Subdivision",
+				"type": "varchar"
+			},
+			{
+				"name": "Line",
+				"type": "varchar"
+			},
+			{
+				"name": "Brewhouse",
+				"type": "varchar"
+			},
+			{
+				"name": "LocationLookup",
+				"type": "varchar"
+			},
+			{
+				"name": "MetricName",
+				"type": "varchar"
+			},
+			{
+				"name": "SourceLine",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "LastUpdated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "vwFactlookup_WMTD"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

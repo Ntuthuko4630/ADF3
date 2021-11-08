@@ -1,0 +1,102 @@
+{
+	"name": "FactKPI_Measures",
+	"properties": {
+		"description": "Recalculate the measures",
+		"activities": [
+			{
+				"name": "Calc Derived Measures",
+				"description": "Reset Measure Staging and calculated the derived measures",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Test",
+						"value": "123"
+					}
+				],
+				"typeProperties": {
+					"storedProcedureName": "[CA].[spCalc_SD_HeadlineMeasures]"
+				},
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Reset Measures",
+				"description": "Delete measures from FactKPI",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Calc Derived Measures",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[CA].[spResetMeasures]"
+				},
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Insert Measures and Weights",
+				"description": "Insert contents of Measure Staging to FactKPI",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Reset Measures",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[CA].[spInsertMeasures]"
+				},
+				"linkedServiceName": {
+					"referenceName": "supplydatastore_server",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"LoadBatchP": {
+				"type": "string",
+				"defaultValue": "'0'"
+			}
+		},
+		"folder": {
+			"name": "Complete"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-06-02T10:03:30Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

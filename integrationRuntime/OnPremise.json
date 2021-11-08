@@ -1,0 +1,12 @@
+{
+	"name": "OnPremise",
+	"properties": {
+		"type": "SelfHosted",
+		"typeProperties": {
+			"linkedInfo": {
+				"resourceId": "/subscriptions/15bcebd1-794e-49c6-9548-8a4a4357ee16/resourcegroups/SupplyDataStoreRG-RG-AFR-DEV/providers/Microsoft.DataFactory/factories/SupplyDataStore-DF-AFR-DEV-2/integrationruntimes/OnPremise",
+				"authorizationType": "Rbac"
+			}
+		}
+	}
+}

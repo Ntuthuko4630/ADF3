@@ -1,0 +1,40 @@
+{
+	"name": "TargetsETL2_V1",
+	"properties": {
+		"description": "Move targets from staging to DW table",
+		"activities": [
+			{
+				"name": "DWTargetsETL2",
+				"description": "Move targets from staging to DW table",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "TargetsETL2",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"concurrency": 1,
+		"folder": {
+			"name": "Dev"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-06-02T10:03:34Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

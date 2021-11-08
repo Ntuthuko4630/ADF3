@@ -1,0 +1,31 @@
+{
+	"name": "vwDateAdjustLookup",
+	"properties": {
+		"description": "Indicates whether week data should shift by 1 day to align ROA and SA week ends",
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Fact Staging ETL1"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SiteName",
+				"type": "varchar"
+			},
+			{
+				"name": "DateAdjust",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "REF",
+			"table": "vwDateAdjustLookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

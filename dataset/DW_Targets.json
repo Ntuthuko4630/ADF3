@@ -1,0 +1,61 @@
+{
+	"name": "DW_Targets",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Targets"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pkiTargets",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fkMeasure",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fkSite",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fkDate",
+				"type": "date"
+			},
+			{
+				"name": "fkTimeLine",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ValueMTD",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "ValueYTD",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "LastUpdated",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "DW",
+			"table": "Targets"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

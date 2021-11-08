@@ -1,0 +1,34 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Debug"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SiteName",
+				"type": "varchar"
+			},
+			{
+				"name": "SiteLookup",
+				"type": "varchar"
+			},
+			{
+				"name": "fkSite",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "REF",
+			"table": "vwSiteLookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

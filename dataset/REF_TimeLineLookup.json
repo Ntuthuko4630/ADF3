@@ -1,0 +1,30 @@
+{
+	"name": "REF_TimeLineLookup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Fact Lookups"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pkiTimeLine",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TimeLine",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "REF",
+			"table": "vwTimelineLookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

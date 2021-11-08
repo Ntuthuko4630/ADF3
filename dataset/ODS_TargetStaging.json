@@ -1,0 +1,78 @@
+{
+	"name": "ODS_TargetStaging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Targets"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pkiTargetStaging",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Concatenate",
+				"type": "varchar"
+			},
+			{
+				"name": "BU Region",
+				"type": "varchar"
+			},
+			{
+				"name": "BU Region 2",
+				"type": "varchar"
+			},
+			{
+				"name": "BURegion",
+				"type": "varchar"
+			},
+			{
+				"name": "Country",
+				"type": "varchar"
+			},
+			{
+				"name": "Plant",
+				"type": "varchar"
+			},
+			{
+				"name": "Plt Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Fin Year",
+				"type": "varchar"
+			},
+			{
+				"name": "Month",
+				"type": "varchar"
+			},
+			{
+				"name": "MTD/YTD",
+				"type": "varchar"
+			},
+			{
+				"name": "Version",
+				"type": "varchar"
+			},
+			{
+				"name": "KPI Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Target",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ODS",
+			"table": "TargetStaging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

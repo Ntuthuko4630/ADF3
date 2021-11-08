@@ -1,0 +1,11 @@
+{
+	"name": "SupplyBlobStore",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=africasupplysaafrdev;EndpointSuffix=core.windows.net;"
+		}
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"name": "REF_SiteLookup2",
+	"properties": {
+		"description": "Duplicate of the site lookup for the targets",
+		"linkedServiceName": {
+			"referenceName": "supplydatastore_server",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Fact Lookups"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SiteName",
+				"type": "varchar"
+			},
+			{
+				"name": "SiteLookup",
+				"type": "varchar"
+			},
+			{
+				"name": "fkSite",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "REF",
+			"table": "vwSiteLookup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
