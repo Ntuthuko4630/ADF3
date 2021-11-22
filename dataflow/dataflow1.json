@@ -1,0 +1,51 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SampleAlrode",
+						"type": "DatasetReference"
+					},
+					"name": "SampleResultsAlrode"
+				},
+				{
+					"dataset": {
+						"referenceName": "SampleIBY",
+						"type": "DatasetReference"
+					},
+					"name": "SampleResultsIbhayi"
+				},
+				{
+					"dataset": {
+						"referenceName": "SamplePOL",
+						"type": "DatasetReference"
+					},
+					"name": "SampleResultsPolokwane"
+				},
+				{
+					"dataset": {
+						"referenceName": "SampleNEW",
+						"type": "DatasetReference"
+					},
+					"name": "SampleResultsNewlands"
+				},
+				{
+					"dataset": {
+						"referenceName": "SamplePROS",
+						"type": "DatasetReference"
+					},
+					"name": "SampleResultsProspecton"
+				},
+				{
+					"name": "SampleResults"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tSiteID as string,\n\t\tSiteName as string,\n\t\tID as integer,\n\t\tSampleDefinitionID as integer,\n\t\tParameterCode as string,\n\t\tValue as double,\n\t\tTarget as double,\n\t\tLCL as double,\n\t\tUCL as double,\n\t\tLSL as double,\n\t\tUSL as double,\n\t\tSampleDateTime as string,\n\t\tEnteredDateTime as string,\n\t\tDueDateTime as timestamp,\n\t\tWeek as string,\n\t\tEnteredWeek as string,\n\t\tUser as string,\n\t\tComment as string,\n\t\tParameterType as string,\n\t\tKPIType as string,\n\t\tProcessArea as string,\n\t\tSpecStatus as string,\n\t\tComplianceStatus as string,\n\t\tOrderID as integer,\n\t\tBatchID as integer,\n\t\tProductID as integer,\n\t\tAreaID as integer,\n\t\tSystemID as integer,\n\t\tProductTypeID as integer,\n\t\tProductName as string,\n\t\tBrand as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SampleResultsAlrode\nsource(output(\n\t\tSiteID as string,\n\t\tSiteName as string,\n\t\tID as integer,\n\t\tSampleDefinitionID as integer,\n\t\tParameterCode as string,\n\t\tValue as double,\n\t\tTarget as double,\n\t\tLCL as double,\n\t\tUCL as double,\n\t\tLSL as double,\n\t\tUSL as double,\n\t\tSampleDateTime as string,\n\t\tEnteredDateTime as string,\n\t\tDueDateTime as timestamp,\n\t\tWeek as string,\n\t\tEnteredWeek as string,\n\t\tUser as string,\n\t\tComment as string,\n\t\tParameterType as string,\n\t\tKPIType as string,\n\t\tProcessArea as string,\n\t\tSpecStatus as string,\n\t\tComplianceStatus as string,\n\t\tOrderID as integer,\n\t\tBatchID as integer,\n\t\tProductID as integer,\n\t\tAreaID as integer,\n\t\tSystemID as integer,\n\t\tProductTypeID as integer,\n\t\tProductName as string,\n\t\tBrand as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SampleResultsIbhayi\nsource(output(\n\t\tSiteID as string,\n\t\tSiteName as string,\n\t\tID as integer,\n\t\tSampleDefinitionID as integer,\n\t\tParameterCode as string,\n\t\tValue as double,\n\t\tTarget as double,\n\t\tLCL as double,\n\t\tUCL as double,\n\t\tLSL as double,\n\t\tUSL as double,\n\t\tSampleDateTime as string,\n\t\tEnteredDateTime as string,\n\t\tDueDateTime as timestamp,\n\t\tWeek as string,\n\t\tEnteredWeek as string,\n\t\tUser as string,\n\t\tComment as string,\n\t\tParameterType as string,\n\t\tKPIType as string,\n\t\tProcessArea as string,\n\t\tSpecStatus as string,\n\t\tComplianceStatus as string,\n\t\tOrderID as integer,\n\t\tBatchID as integer,\n\t\tProductID as integer,\n\t\tAreaID as integer,\n\t\tSystemID as integer,\n\t\tProductTypeID as integer,\n\t\tProductName as string,\n\t\tBrand as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SampleResultsPolokwane\nsource(output(\n\t\tSiteID as string,\n\t\tSiteName as string,\n\t\tID as integer,\n\t\tSampleDefinitionID as integer,\n\t\tParameterCode as string,\n\t\tValue as double,\n\t\tTarget as double,\n\t\tLCL as double,\n\t\tUCL as double,\n\t\tLSL as double,\n\t\tUSL as double,\n\t\tSampleDateTime as string,\n\t\tEnteredDateTime as string,\n\t\tDueDateTime as timestamp,\n\t\tWeek as string,\n\t\tEnteredWeek as string,\n\t\tUser as string,\n\t\tComment as string,\n\t\tParameterType as string,\n\t\tKPIType as string,\n\t\tProcessArea as string,\n\t\tSpecStatus as string,\n\t\tComplianceStatus as string,\n\t\tOrderID as integer,\n\t\tBatchID as integer,\n\t\tProductID as integer,\n\t\tAreaID as integer,\n\t\tSystemID as integer,\n\t\tProductTypeID as integer,\n\t\tProductName as string,\n\t\tBrand as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SampleResultsNewlands\nsource(output(\n\t\tSiteID as string,\n\t\tSiteName as string,\n\t\tID as integer,\n\t\tSampleDefinitionID as integer,\n\t\tParameterCode as string,\n\t\tValue as double,\n\t\tTarget as double,\n\t\tLCL as double,\n\t\tUCL as double,\n\t\tLSL as double,\n\t\tUSL as double,\n\t\tSampleDateTime as string,\n\t\tEnteredDateTime as string,\n\t\tDueDateTime as timestamp,\n\t\tWeek as string,\n\t\tEnteredWeek as string,\n\t\tUser as string,\n\t\tComment as string,\n\t\tParameterType as string,\n\t\tKPIType as string,\n\t\tProcessArea as string,\n\t\tSpecStatus as string,\n\t\tComplianceStatus as string,\n\t\tOrderID as integer,\n\t\tBatchID as integer,\n\t\tProductID as integer,\n\t\tAreaID as integer,\n\t\tSystemID as integer,\n\t\tProductTypeID as integer,\n\t\tProductName as string,\n\t\tBrand as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SampleResultsProspecton\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> SampleResults"
+		}
+	}
+}
