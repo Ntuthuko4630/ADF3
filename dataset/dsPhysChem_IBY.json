@@ -10,7 +10,11 @@
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "rSampleResult"
+		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
 }
