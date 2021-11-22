@@ -1,0 +1,12 @@
+{
+	"name": "AzureDataStore",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=supplydatastoreserver.database.windows.net;initial catalog=SupplyCalcEngine;user id=CalcEngine",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDg2RjI5MEI4LTQ2MjktNDI3MS1CNUE0LUMwMDhCRUY3MDVEM19hOWI1MDEyMC1jYTM0LTQ2N2QtOGNjMy04NzhiYjJkOTAzYzYiDQp9"
+		}
+	}
+}
