@@ -1,0 +1,15 @@
+{
+	"name": "src_rSampResNEW",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PhysChem",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ServerName": "10.111.240.39"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}
