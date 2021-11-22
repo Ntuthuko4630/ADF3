@@ -117,7 +117,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow3",
+						"referenceName": "dfSampleResults",
 						"type": "DataFlowReference"
 					},
 					"compute": {
