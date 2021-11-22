@@ -292,6 +292,73 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "DFrSampRes",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "CopyrSampResPROS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "CopyrSampResNEW",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "CopyrSampResPOL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "CopyrSampResIBY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "CopyrSampResALR",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "CopyrSampResCHAM",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "CopyrSampResROS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dfrSampleResults",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"annotations": []
