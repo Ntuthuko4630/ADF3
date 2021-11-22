@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT top 10 *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -62,7 +62,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT top 10 *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -93,24 +93,11 @@
 				]
 			},
 			{
-				"name": "rSampleResults",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "CopySampleResALR",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "CopySampleResIBY",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"name": "CopySampleResPOL",
+				"type": "Copy",
+				"dependsOn": [],
 				"policy": {
-					"timeout": "1.00:00:00",
+					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -118,16 +105,37 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dfSampleResults",
-						"type": "DataFlowReference"
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"sink": {
+						"type": "SqlServerSink"
 					},
-					"traceLevel": "Fine"
-				}
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "sSampleResPOL",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sRSampleResPOL",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
