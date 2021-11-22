@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -3,  cast(getdate() as date))",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -62,7 +62,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -3,  cast(getdate() as date))",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -107,7 +107,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -3,  cast(getdate() as date))",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -152,7 +152,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -3,  cast(getdate() as date))",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -197,7 +197,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -3,  cast(getdate() as date))",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -234,7 +234,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -3,  cast(getdate() as date))",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -271,7 +271,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -6,  cast(getdate() as date))",
+						"sqlReaderQuery": "SELECT  *\n  FROM [EDB_ABI_001].[dbo].[rSampleResult]\n  where SampleDateTime > dateadd(month, -3,  cast(getdate() as date))",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
