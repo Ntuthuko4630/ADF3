@@ -1,0 +1,158 @@
+{
+	"name": "rSampleALR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lsPhysChemSink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SiteID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SiteName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SampleDefinitionID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ParameterCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Value",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Target",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "LCL",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "UCL",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "LSL",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "USL",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "SampleDateTime",
+				"type": "datetimeoffset",
+				"scale": 3
+			},
+			{
+				"name": "EnteredDateTime",
+				"type": "datetimeoffset",
+				"scale": 3
+			},
+			{
+				"name": "DueDateTime",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Week",
+				"type": "varchar"
+			},
+			{
+				"name": "EnteredWeek",
+				"type": "varchar"
+			},
+			{
+				"name": "User",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Comment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ParameterType",
+				"type": "varchar"
+			},
+			{
+				"name": "KPIType",
+				"type": "varchar"
+			},
+			{
+				"name": "ProcessArea",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SpecStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ComplianceStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OrderID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "BatchID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AreaID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SystemID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductTypeID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Brand",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Staging",
+			"table": "rSampleResultsALR"
+		}
+	}
+}
