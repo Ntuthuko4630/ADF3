@@ -104,7 +104,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "rSampleDefinition"
+			"table": "rxSampleDefinition"
 		}
 	}
 }
