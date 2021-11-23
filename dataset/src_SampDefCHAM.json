@@ -3,7 +3,10 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "PhysChem",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ServerName": "10.111.240.116"
+			}
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
