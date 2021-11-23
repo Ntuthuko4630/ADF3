@@ -642,7 +642,7 @@
 				]
 			},
 			{
-				"name": "CopySampDeROS",
+				"name": "CopySampDefROS",
 				"type": "Copy",
 				"dependsOn": [
 					{
