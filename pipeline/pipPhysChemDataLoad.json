@@ -108,7 +108,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_IBY]",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_CHAM]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
