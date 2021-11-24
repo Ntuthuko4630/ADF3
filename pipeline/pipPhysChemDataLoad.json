@@ -50,7 +50,14 @@
 			{
 				"name": "CopyPhyschem_IBY",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CopyPhyschem_ALR",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -96,7 +103,14 @@
 			{
 				"name": "CopyPhyschem_CHAM",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CopyPhyschem_IBY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -134,7 +148,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "df_snkPhysChem_IBY",
+						"referenceName": "df_snkPhysChem_CHAM",
 						"type": "DatasetReference"
 					}
 				]
@@ -142,7 +156,14 @@
 			{
 				"name": "CopyPhyschem_POL",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CopyPhyschem_CHAM",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -154,7 +175,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_CHAM]",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_POL]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -180,7 +201,166 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "df_snkPhysChem_IBY",
+						"referenceName": "df_snkPhysChem_POL",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "CopyPhyschem_NEW",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "CopyPhyschem_POL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_NEW]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "dfPhysChem_NEW",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "df_snkPhysChem_NEW",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "CopyPhyschem_PROS",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "CopyPhyschem_NEW",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_PROS]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "dfPhysChem_PROS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "df_snkPhysChem_PROS",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "CopyPhyschem_ROS",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "CopyPhyschem_PROS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_ROS]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "dfPhysChem_ROS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "df_snkPhysChem_ROS",
 						"type": "DatasetReference"
 					}
 				]
