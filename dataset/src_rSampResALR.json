@@ -1,0 +1,19 @@
+{
+	"name": "src_rSampResALR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PhysChem",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ServerName": "10.111.240.13"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "rSampleResult"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"name": "dfUnionAllPhysChemTables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataStore",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}

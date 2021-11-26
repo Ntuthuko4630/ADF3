@@ -1,9 +1,9 @@
 {
-	"name": "plPhysChem",
+	"name": "pipPhysChemDataLoadETL1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Ibhayi Data",
+				"name": "CopyPhyschem_ALR",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[PhysChemBCI_IBY]",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_ALR]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -27,188 +27,6 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "Parameter",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "Parameter",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "ParameterCode",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "ParameterCode",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Brand",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "Brand",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "KPI",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "KPI",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "ProcessGroup",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "ProcessGroup",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "ProcessGroupGlobal",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "ProcessGroupGlobal",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "ProcessArea",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "ProcessArea",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "VALUE",
-									"type": "Double",
-									"physicalType": "float"
-								},
-								"sink": {
-									"name": "VALUE",
-									"type": "Double",
-									"physicalType": "float"
-								}
-							},
-							{
-								"source": {
-									"name": "TARGET",
-									"type": "Double",
-									"physicalType": "float"
-								},
-								"sink": {
-									"name": "TARGET",
-									"type": "Double",
-									"physicalType": "float"
-								}
-							},
-							{
-								"source": {
-									"name": "EnteredDateTime",
-									"type": "DateTimeOffset",
-									"physicalType": "datetimeoffset"
-								},
-								"sink": {
-									"name": "EnteredDateTime",
-									"type": "DateTimeOffset",
-									"physicalType": "datetimeoffset"
-								}
-							},
-							{
-								"source": {
-									"name": "SampleDateTime",
-									"type": "DateTimeOffset",
-									"physicalType": "datetimeoffset"
-								},
-								"sink": {
-									"name": "SampleDateTime",
-									"type": "DateTimeOffset",
-									"physicalType": "datetimeoffset"
-								}
-							},
-							{
-								"source": {
-									"name": "DueDateTime",
-									"type": "DateTime",
-									"physicalType": "datetime2"
-								},
-								"sink": {
-									"name": "DueDateTime",
-									"type": "DateTimeOffset",
-									"physicalType": "datetimeoffset"
-								}
-							},
-							{
-								"source": {
-									"name": "ParameterType",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "ParameterType",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "SpecStatus",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "SpecStatus",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"source": {
-									"name": "SiteID",
-									"type": "String",
-									"physicalType": "nvarchar"
-								},
-								"sink": {
-									"name": "SiteID",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							}
-						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -218,23 +36,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dsPhysChem_IBY",
+						"referenceName": "dfPhysChem_ALR",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "sPhysChem",
+						"referenceName": "df_snkPhysChem_ALR",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Alrode Data",
+				"name": "CopyPhyschem_IBY",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Ibhayi Data",
+						"activity": "CopyPhyschem_ALR",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -251,12 +69,13 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[PhysChemBCI_ALR]",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_IBY]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "SqlServerSink",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -270,23 +89,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dsPhysChem_Alrode",
+						"referenceName": "dfPhysChem_IBY",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "sPhyshemALR",
+						"referenceName": "df_snkPhysChem_IBY",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Polokwane Data",
+				"name": "CopyPhyschem_CHAM",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Alrode Data",
+						"activity": "CopyPhyschem_IBY",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -303,12 +122,13 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[PhysChemBCI_POL]",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_CHAM]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "SqlServerSink",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -322,23 +142,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dsPhysChemPOL",
+						"referenceName": "dfPhysChem_CHAM",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "sPhysChemPOL",
+						"referenceName": "df_snkPhysChem_CHAM",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Newlands Data",
+				"name": "CopyPhyschem_POL",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Polokwane Data",
+						"activity": "CopyPhyschem_CHAM",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -355,12 +175,13 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[PhysChemBCI_NEW]",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_POL]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "SqlServerSink",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -374,23 +195,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dsPhysChemNEW",
+						"referenceName": "dfPhysChem_POL",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "sPhysChemNEW",
+						"referenceName": "df_snkPhysChem_POL",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Prospecton Data",
+				"name": "CopyPhyschem_NEW",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Newlands Data",
+						"activity": "CopyPhyschem_POL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -407,12 +228,13 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[PhysChemBCI_PROS]",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_NEW]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "SqlServerSink",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -426,23 +248,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dsPhysyChemPROS",
+						"referenceName": "dfPhysChem_NEW",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "sPhysChemPROS",
+						"referenceName": "df_snkPhysChem_NEW",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Chamdor Data",
+				"name": "CopyPhyschem_PROS",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Prospecton Data",
+						"activity": "CopyPhyschem_NEW",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -459,12 +281,13 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[PhysChemBCI_CHAM]",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_PROS]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "SqlServerSink",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -478,23 +301,23 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dsPhysChemCHAM",
+						"referenceName": "dfPhysChem_PROS",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "sPhysChemCHAM",
+						"referenceName": "df_snkPhysChem_PROS",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Rosslyn Data",
+				"name": "CopyPhyschem_ROS",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Chamdor Data",
+						"activity": "CopyPhyschem_PROS",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -511,12 +334,13 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[PhysChemBCI_ROS]",
+						"sqlReaderStoredProcedureName": "[dbo].[Physchem_Index_ROS]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "SqlServerSink",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
@@ -530,23 +354,18 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dsPhysChemROS",
+						"referenceName": "dfPhysChem_ROS",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "sPhysChemROS",
+						"referenceName": "df_snkPhysChem_ROS",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"folder": {
-			"name": "Dev"
-		},
-		"annotations": [],
-		"lastPublishTime": "2021-11-08T08:54:36Z"
-	},
-	"type": "Microsoft.DataFactory/factories/pipelines"
+		"annotations": []
+	}
 }
