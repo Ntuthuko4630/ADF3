@@ -1,5 +1,5 @@
 {
-	"name": "unionall",
+	"name": "df_unionall",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
