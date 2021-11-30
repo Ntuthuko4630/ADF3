@@ -1,0 +1,24 @@
+{
+	"name": "DF_SNK_RSAMPLERES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLSupplyCalc",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TABLENAME": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "Staging",
+			"table": {
+				"value": "@dataset().TABLENAME",
+				"type": "Expression"
+			}
+		}
+	}
+}
