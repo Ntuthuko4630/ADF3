@@ -1,0 +1,12 @@
+{
+	"name": "DS_LKP_SERVERNAMES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLSupplyCalc",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
