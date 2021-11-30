@@ -80,7 +80,13 @@
 							"inputs": [
 								{
 									"referenceName": "DF_SCR_RSAMPLERES",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"ServerName": {
+											"value": "@item().DBServerIP",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
