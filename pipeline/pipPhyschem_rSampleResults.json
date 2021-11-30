@@ -92,7 +92,13 @@
 							"outputs": [
 								{
 									"referenceName": "DF_SNK_RSAMPLERES",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"TABLENAME": {
+											"value": "@concat('rSampleResults',item().Site)",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
