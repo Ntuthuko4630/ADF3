@@ -736,6 +736,58 @@
 					"referenceName": "AzureDataStore",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "UnionrSampleResults",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "rSampleDefROS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[spUnionrSampleResults]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_PHYETL1_UNIONRSAMPLER",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_PHYETL1_SNK_UNIONRSAMPLERESULTS",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
