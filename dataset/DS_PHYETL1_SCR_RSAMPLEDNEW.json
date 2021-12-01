@@ -1,0 +1,19 @@
+{
+	"name": "DS_PHYETL1_SCR_RSAMPLEDNEW",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PhysChem",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ServerName": "10.111.240.39"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "rxSampleDefinition"
+		}
+	}
+}
