@@ -152,7 +152,7 @@
 		],
 		"typeProperties": {
 			"schema": "Staging",
-			"table": "rSampleResultsIBY"
+			"table": "rSampleResultsALR"
 		}
 	}
 }
