@@ -1,0 +1,12 @@
+{
+	"name": "DS_PHYETL1_UNIONRSAMPLER",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLSupplyCalc",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
