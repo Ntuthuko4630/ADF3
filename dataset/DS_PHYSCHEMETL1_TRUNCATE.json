@@ -1,0 +1,12 @@
+{
+	"name": "DS_PHYSCHEMETL1_TRUNCATE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLSupplyCalc",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
