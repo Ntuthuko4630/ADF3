@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "UnionrSamleResults",
+				"name": "UnionrSampleResults",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -43,6 +43,58 @@
 				"outputs": [
 					{
 						"referenceName": "DS_PHYETL1_SNK_UNION",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "UnionrSampleDefinitions",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "UnionrSampleResults",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[spUnionrSampleDefinitions]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_PHYETL1_UNIONSAMPDEF",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_PHYETL1_SNK_UNIONSAMPDEF",
 						"type": "DatasetReference"
 					}
 				]
