@@ -1,0 +1,19 @@
+{
+	"name": "DS_PHYETL1_SRC_RSAMPLERPOL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PhysChem",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ServerName": "10.111.240.87"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "rSampleResult"
+		}
+	}
+}
