@@ -4,36 +4,11 @@
 		"description": "Copies all data from different site servers into Datastore server",
 		"activities": [
 			{
-				"name": "TrunCate Staging",
-				"type": "Lookup",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderStoredProcedureName": "[dbo].[TruncateSamples]",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "DS_PHYSCHEMETL1_TRUNCATE",
-						"type": "DatasetReference"
-					}
-				}
-			},
-			{
 				"name": "rSampleResultsALR",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "TrunCate Staging",
+						"activity": "Trunc Staging",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -741,6 +716,26 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Trunc Staging",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[TruncateSamples]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDataStore",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
