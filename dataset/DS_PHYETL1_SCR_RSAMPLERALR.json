@@ -5,7 +5,7 @@
 			"referenceName": "PhysChem",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"ServerName": "10.111.240.196"
+				"ServerName": "10.111.240.87"
 			}
 		},
 		"annotations": [],
