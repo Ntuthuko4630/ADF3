@@ -1,5 +1,5 @@
 {
-	"name": "PL_BCIChem_Ochestrate_copy1",
+	"name": "PL_BCIChem_Ochestrate_remote",
 	"properties": {
 		"activities": [
 			{
@@ -33,6 +33,76 @@
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Completion Callback",
+				"description": "Call back for synchronous remote trigger operation ",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "ETL2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().parameters.callBackUri",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "{\"Output\":{\"InputParam\":\"Completed Successfully\"},\"StatusCode\":\"200\"}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "FailCallback",
+				"description": "Call back for synchronous remote trigger operation ",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "ETL2",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "ETL1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().parameters.callBackUri",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "{\"Output\":{\"InputParam\":\"Operation Failed\"},\"StatusCode\":\"501\"}",
+						"type": "Expression"
+					}
 				}
 			}
 		],
