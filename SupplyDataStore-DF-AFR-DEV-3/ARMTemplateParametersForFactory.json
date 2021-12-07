@@ -5,6 +5,12 @@
 		"factoryName": {
 			"value": "SupplyDataStore-DF-AFR-DEV-3"
 		},
+		"AzureDataStore_connectionString": {
+			"value": ""
+		},
+		"AzureSQLSupplyCalc_connectionString": {
+			"value": ""
+		},
 		"DataStore_connectionString": {
 			"value": ""
 		},

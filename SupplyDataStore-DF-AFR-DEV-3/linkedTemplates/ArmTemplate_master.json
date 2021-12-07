@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "SupplyDataStore-DF-AFR-DEV-3"
 		},
+		"AzureDataStore_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureDataStore'"
+		},
+		"AzureSQLSupplyCalc_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLSupplyCalc'"
+		},
 		"DataStore_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DataStore'"
@@ -78,6 +86,12 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDataStore_connectionString": {
+						"value": "[parameters('AzureDataStore_connectionString')]"
+					},
+					"AzureSQLSupplyCalc_connectionString": {
+						"value": "[parameters('AzureSQLSupplyCalc_connectionString')]"
+					},
 					"DataStore_connectionString": {
 						"value": "[parameters('DataStore_connectionString')]"
 					},
@@ -125,46 +139,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_0')]"
-			]
-		},
-		{
-			"name": "SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_2",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_1')]"
-			]
-		},
-		{
-			"name": "SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_3",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
 					},
 					"PhysChem_connectionString": {
 						"value": "[parameters('PhysChem_connectionString')]"
@@ -172,47 +146,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_2')]"
-			]
-		},
-		{
-			"name": "SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_4",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_3')]"
-			]
-		},
-		{
-			"name": "SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_5",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_4')]"
+				"[resourceId('Microsoft.Resources/deployments', 'SupplyDataStore-DF-AFR-DEV-3_ArmTemplate_0')]"
 			]
 		}
 	]

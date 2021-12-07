@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "SupplyDataStore-DF-AFR-DEV-3"
 		},
+		"AzureDataStore_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureDataStore'"
+		},
+		"AzureSQLSupplyCalc_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLSupplyCalc'"
+		},
 		"DataStore_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DataStore'"
@@ -52,6 +60,32 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataStore')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureDataStore_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSQLSupplyCalc')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSQLSupplyCalc_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DataStore')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -178,6 +212,34 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/RunSchedule')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-11-08T12:10:00",
+						"timeZone": "South Africa Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								0
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OnPremise')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -193,715 +255,34 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FactKPI_Measures')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Recalculate the measures",
-				"activities": [
-					{
-						"name": "Calc Derived Measures",
-						"description": "Reset Measure Staging and calculated the derived measures",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Test",
-								"value": "123"
-							}
-						],
-						"typeProperties": {
-							"storedProcedureName": "[[CA].[spCalc_SD_HeadlineMeasures]"
-						},
-						"linkedServiceName": {
-							"referenceName": "supplydatastore_server",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Reset Measures",
-						"description": "Delete measures from FactKPI",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Calc Derived Measures",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[CA].[spResetMeasures]"
-						},
-						"linkedServiceName": {
-							"referenceName": "supplydatastore_server",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Insert Measures and Weights",
-						"description": "Insert contents of Measure Staging to FactKPI",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Reset Measures",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[CA].[spInsertMeasures]"
-						},
-						"linkedServiceName": {
-							"referenceName": "supplydatastore_server",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"LoadBatchP": {
-						"type": "string",
-						"defaultValue": "'0'"
-					}
-				},
-				"folder": {
-					"name": "Complete"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-06-02T10:03:30Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/supplydatastore_server')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"name": "[concat(parameters('factoryName'), '/ds_lkp_oldDate')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "supplydatastore_server",
+					"referenceName": "AzureSQLSupplyCalc",
 					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Debug"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "SiteName",
-						"type": "varchar"
-					},
-					{
-						"name": "SiteLookup",
-						"type": "varchar"
-					},
-					{
-						"name": "fkSite",
-						"type": "bigint",
-						"precision": 19
-					}
-				],
+				"schema": [],
 				"typeProperties": {
-					"schema": "REF",
-					"table": "vwSiteLookup"
+					"schema": "Fact",
+					"table": "PhyChem_Data"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/supplydatastore_server')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLSupplyCalc')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/BlobRead1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Test read from data store",
-				"linkedServiceName": {
-					"referenceName": "SupplyBlobStore",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Debug"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "KPI Name Mapping.xlsx",
-						"container": "testdata"
-					},
-					"sheetIndex": 0,
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "KPI_NAME ",
-						"type": "String"
-					},
-					{
-						"name": "KPI_CODE ",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SupplyBlobStore')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DWFactKPI')]",
+			"name": "[concat(parameters('factoryName'), '/ds_scrPhysChemCopyToFact')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "supplydatastore_server",
+					"referenceName": "AzureSQLSupplyCalc",
 					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Facts ETL2"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "pkiFactKPI",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkDate",
-						"type": "date"
-					},
-					{
-						"name": "fkSite",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkLocation",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkPackLine",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkBrewhouse",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkMetric",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkDomain",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "fkTimeLine",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Value",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "WeightingFactor",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Target",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "TargetWeightingFactor",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "SourceLine",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkBatch",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "LastUpdated",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Disable",
-						"type": "bit"
-					}
-				],
-				"typeProperties": {
-					"schema": "DW",
-					"table": "FactKPI"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/supplydatastore_server')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DWFactKPIRead')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "supplydatastore_server",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Fact Lookups"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "pkiFactKPI",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkDate",
-						"type": "date"
-					},
-					{
-						"name": "fkSite",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkLocation",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkPackLine",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkBrewhouse",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkMetric",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkDomain",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "fkTimeLine",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Value",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "WeightingFactor",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Target",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "TargetWeightingFactor",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "SourceLine",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkBatch",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "LastUpdated",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Disable",
-						"type": "bit"
-					}
-				],
-				"typeProperties": {
-					"schema": "DW",
-					"table": "FactKPI"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/supplydatastore_server')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DWFactKPIStaging')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "supplydatastore_server",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Facts ETL2"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "fkDate",
-						"type": "date"
-					},
-					{
-						"name": "fkSite",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkLocation",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkPackLine",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkBrewhouse",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkMetric",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkDomain",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "fkTimeLine",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Value",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "WeightingFactor",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Target",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "TargetWeightingFactor",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "SourceLine",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkBatch",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "LastUpdated",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Disable",
-						"type": "bit"
-					}
-				],
-				"typeProperties": {
-					"schema": "ODS",
-					"table": "FactKPIStaging"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/supplydatastore_server')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DW_Targets')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "supplydatastore_server",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Targets"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "pkiTargets",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkMeasure",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkSite",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "fkDate",
-						"type": "date"
-					},
-					{
-						"name": "fkTimeLine",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ValueMTD",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "ValueYTD",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "LastUpdated",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "DW",
-					"table": "Targets"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/supplydatastore_server')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DebugOutput')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "supplydatastore_server",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Debug"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Plant",
-						"type": "varchar"
-					},
-					{
-						"name": "Fin Year",
-						"type": "varchar"
-					},
-					{
-						"name": "Month",
-						"type": "varchar"
-					},
-					{
-						"name": "MTD/YTD",
-						"type": "varchar"
-					},
-					{
-						"name": "KPI Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Target",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "DebugOutput"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/supplydatastore_server')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DebugSink')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "supplydatastore_server",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Fact Staging ETL1"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "pkID",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "BrewName",
-						"type": "varchar"
-					},
-					{
-						"name": "DateStarting",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "LastUpdated",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "TimeLine",
-						"type": "char"
-					},
-					{
-						"name": "Section",
-						"type": "varchar"
-					},
-					{
-						"name": "FlowMeasure",
-						"type": "varchar"
-					},
-					{
-						"name": "Area",
-						"type": "varchar"
-					},
-					{
-						"name": "UOM",
-						"type": "varchar"
-					},
-					{
-						"name": "Value",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Batch",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Debug"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/supplydatastore_server')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DynBackupControl')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "supplydatastore_server",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Dynamic Backup"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -909,7 +290,335 @@
 				"typeProperties": {}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/supplydatastore_server')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLSupplyCalc')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_scrPhysChem_Union')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataStore')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_snkPhysChem_ALR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSQLSupplyCalc",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ODSBreweryCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FYEAR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FMONTH",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FWEEK",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FDAY",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DEPARTMENT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PROCESS_AREA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PARAMETER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ORDER_NUMBER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IN_SPEC",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "OPPORTUNITIES",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "PERC_IN_SPEC",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "EnteredDateTime",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "Staging",
+					"table": "PhyChem_ALR"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLSupplyCalc')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_snkPhysChem_CHAM')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSQLSupplyCalc",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ODSBreweryCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FYEAR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FMONTH",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FWEEK",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FDAY",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DEPARTMENT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PROCESS_AREA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PARAMETER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ORDER_NUMBER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IN_SPEC",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "OPPORTUNITIES",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "PERC_IN_SPEC",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "EnteredDateTime",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "Staging",
+					"table": "PhyChem_CHAM"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLSupplyCalc')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_snkPhysChem_Data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSQLSupplyCalc",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ODSBreweryCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FYEAR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FMONTH",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FWEEK",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FDAY",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DEPARTMENT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PROCESS_AREA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PARAMETER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ORDER_NUMBER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IN_SPEC",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "OPPORTUNITIES",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "PERC_IN_SPEC",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "EnteredDateTime",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "Staging",
+					"table": "PhyChem_Data"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLSupplyCalc')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_snkPhysChem_Fact')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSQLSupplyCalc",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ODSBreweryCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FYEAR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FMONTH",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FWEEK",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FDAY",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DEPARTMENT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PROCESS_AREA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PARAMETER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ORDER_NUMBER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "IN_SPEC",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "OPPORTUNITIES",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "PERC_IN_SPEC",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "UPDATED DATE",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "Fact",
+					"table": "PhyChem_Data"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLSupplyCalc')]"
 			]
 		}
 	]
