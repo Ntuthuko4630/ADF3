@@ -1,0 +1,12 @@
+{
+	"name": "ds_scrPhysChemCopyToFact",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLSupplyCalc",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

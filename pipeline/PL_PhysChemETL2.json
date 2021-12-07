@@ -1,0 +1,85 @@
+{
+	"name": "PL_PhysChemETL2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lkp_OldEnteredDate",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT Max(EnteredDateTime) as MaxEnteredDateTime\n  FROM [Fact].[PhyChem_Data]\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "ds_lkp_oldDate",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Copy To Fact",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lkp_OldEnteredDate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT \n       [ODSBreweryCode]\n      ,[FYEAR]\n      ,[FMONTH]\n      ,[FWEEK]\n      ,[FDAY]\n      ,[DEPARTMENT]\n      ,[PROCESS_AREA]\n      ,[PARAMETER]\n      ,[ORDER_NUMBER]\n      ,[IN_SPEC]\n      ,[OPPORTUNITIES]\n      ,[PERC_IN_SPEC]\n      ,[EnteredDateTime]\n  FROM [Staging].[PhyChem_Data]\n  WHERE > '@{activity('Lkp_OldEnteredDate').output.firstRow.MaxEnteredDateTime}'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_scrPhysChemCopyToFact",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_snkPhysChem_Fact",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

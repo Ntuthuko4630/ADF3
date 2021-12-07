@@ -1,0 +1,41 @@
+{
+	"name": "PL_BCIChem",
+	"properties": {
+		"activities": [
+			{
+				"name": "ETL1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_BCIETL1",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "ETL2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ETL1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_BCIETL2",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
