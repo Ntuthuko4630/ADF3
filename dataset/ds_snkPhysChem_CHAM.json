@@ -1,0 +1,72 @@
+{
+	"name": "ds_snkPhysChem_CHAM",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLSupplyCalc",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ODSBreweryCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FYEAR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FMONTH",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FWEEK",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FDAY",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DEPARTMENT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PROCESS_AREA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PARAMETER",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ORDER_NUMBER",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IN_SPEC",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "OPPORTUNITIES",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "PERC_IN_SPEC",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "EnteredDateTime",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "Staging",
+			"table": "PhyChem_CHAM"
+		}
+	}
+}

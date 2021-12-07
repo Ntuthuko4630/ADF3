@@ -1,12 +1,9 @@
 {
-	"name": "ds_scrPhysChem_ALR",
+	"name": "ds_scrPhysChem_IBY",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "PhysChem",
-			"type": "LinkedServiceReference",
-			"parameters": {
-				"ServerName": "10.111.240.13"
-			}
+			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
