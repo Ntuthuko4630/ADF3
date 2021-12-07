@@ -36,6 +36,14 @@
 				}
 			}
 		],
+		"parameters": {
+			"callBackUri": {
+				"type": "string"
+			},
+			"InputParam": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
