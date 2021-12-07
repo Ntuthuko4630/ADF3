@@ -1,0 +1,15 @@
+{
+	"name": "ds_scrPhysChem_ROS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PhysChem",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ServerName": "10.111.240.139"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}
