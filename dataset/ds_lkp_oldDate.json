@@ -1,0 +1,16 @@
+{
+	"name": "ds_lkp_oldDate",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLSupplyCalc",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "Fact",
+			"table": "PhyChem_Data"
+		}
+	}
+}
