@@ -62,14 +62,14 @@
 					},
 					"method": "POST",
 					"body": {
-						"value": "{\"Output\":{\"InputParam\":\"Completed Successfully\"},\"StatusCode\":\"200\"}",
+						"value": "{\"Output\":{\"InputParam\":\"BCI - Completed Successfully\"},\"StatusCode\":\"200\"}",
 						"type": "Expression"
 					}
 				}
 			},
 			{
 				"name": "FailCallback",
-				"description": "Call back for synchronous remote trigger operation ",
+				"description": "Call back for synchronous remote trigger operation failure",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
@@ -100,7 +100,7 @@
 					},
 					"method": "POST",
 					"body": {
-						"value": "{\"Output\":{\"InputParam\":\"Operation Failed\"},\"StatusCode\":\"501\"}",
+						"value": "{\"Output\":{\"InputParam\":\"BCI - Operation Failed\"},\"StatusCode\":\"501\"}",
 						"type": "Expression"
 					}
 				}
