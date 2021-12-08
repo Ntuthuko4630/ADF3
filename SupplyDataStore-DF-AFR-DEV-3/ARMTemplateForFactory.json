@@ -2462,6 +2462,272 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_BCI_Orchestrate_remote')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ETL1",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_BCIETL1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ETL2",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ETL1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_BCIETL2",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Completion Callback",
+						"description": "Call back for synchronous remote trigger operation ",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "ETL2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@pipeline().parameters.callBackUri",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\"Output\":{\"InputParam\":\"BCI - Completed Successfully\"},\"StatusCode\":\"200\"}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "FailCallback",
+						"description": "Call back for synchronous remote trigger operation failure",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "ETL2",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "ETL1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@pipeline().parameters.callBackUri",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\"Output\":{\"InputParam\":\"BCI - Operation Failed\"},\"StatusCode\":\"501\"}",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"callBackUri": {
+						"type": "string"
+					},
+					"InputParam": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_BCIETL1')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_BCIETL2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_PhysChem_Orchestrate_remote')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ETL1",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_PhysChemETL2",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ETL2",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ETL1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_BCIETL2",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Completion Callback",
+						"description": "Call back for synchronous remote trigger operation ",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "ETL2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@pipeline().parameters.callBackUri",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\"Output\":{\"InputParam\":\"Physchem - Completed Successfully\"},\"StatusCode\":\"200\"}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "FailCallback",
+						"description": "Call back for synchronous remote trigger operation failure",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "ETL2",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "ETL1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@pipeline().parameters.callBackUri",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\"Output\":{\"InputParam\":\"Physchem - Operation Failed\"},\"StatusCode\":\"501\"}",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"callBackUri": {
+						"type": "string"
+					},
+					"InputParam": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_PhysChemETL2')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_BCIETL2')]"
+			]
 		}
 	]
 }
