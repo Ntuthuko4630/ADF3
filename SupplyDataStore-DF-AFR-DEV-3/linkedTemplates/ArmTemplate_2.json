@@ -134,7 +134,7 @@
 					"callBackUri": {
 						"type": "string"
 					},
-					"InputParam": {
+					"myInputParam1": {
 						"type": "string"
 					}
 				},
