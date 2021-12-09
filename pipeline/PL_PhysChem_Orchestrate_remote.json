@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_PhysChemETL2",
+						"referenceName": "PL_PhysChemETL1",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -29,7 +29,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_BCIETL2",
+						"referenceName": "PL_PhysChemETL2",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
