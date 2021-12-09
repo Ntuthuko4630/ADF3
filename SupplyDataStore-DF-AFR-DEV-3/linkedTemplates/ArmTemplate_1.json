@@ -468,7 +468,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "SELECT \n       [ODSBreweryCode]\n      ,[FYEAR]\n      ,[FMONTH]\n      ,[FWEEK]\n      ,[FDAY]\n      ,[DEPARTMENT]\n      ,[PROCESS_AREA]\n      ,[PARAMETER]\n      ,[ORDER_NUMBER]\n      ,[IN_SPEC]\n      ,[OPPORTUNITIES]\n      ,[PERC_IN_SPEC]\n      ,[EnteredDateTime]\n  FROM [Staging].[PhyChem_Data]\n  WHERE > '@{activity('Lkp_OldEnteredDate').output.firstRow.MaxEnteredDateTime}'",
+									"value": "SELECT \n       [ODSBreweryCode]\n      ,[FYEAR]\n      ,[FMONTH]\n      ,[FWEEK]\n      ,[FDAY]\n      ,[DEPARTMENT]\n      ,[PROCESS_AREA]\n      ,[PARAMETER]\n      ,[ORDER_NUMBER]\n      ,[IN_SPEC]\n      ,[OPPORTUNITIES]\n      ,[PERC_IN_SPEC]\n      ,[EnteredDateTime]\n  FROM [Staging].[PhyChem_Data]\n  WHERE MaxEnteredDateTime > '@{activity('Lkp_OldEnteredDate').output.firstRow.MaxEnteredDateTime}'",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -566,7 +566,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "SELECT \n       [ODSBreweryCode]\n      ,[FYEAR]\n      ,[FMONTH]\n      ,[FWEEK]\n      ,[FDAY]\n      ,[DEPARTMENT]\n      ,[PROCESS_AREA]\n      ,[PARAMETER]\n      ,[ORDER_NUMBER]\n      ,[IN_SPEC]\n      ,[OPPORTUNITIES]\n      ,[PERC_IN_SPEC]\n      ,[EnteredDateTime]\n  FROM [Staging].[PhyChem_Data]\n  WHERE > '@{activity('Lkp_OldEnteredDate').output.firstRow.MaxEnteredDateTime}'",
+									"value": "SELECT \n       [ODSBreweryCode]\n      ,[FYEAR]\n      ,[FMONTH]\n      ,[FWEEK]\n      ,[FDAY]\n      ,[DEPARTMENT]\n      ,[PROCESS_AREA]\n      ,[PARAMETER]\n      ,[ORDER_NUMBER]\n      ,[IN_SPEC]\n      ,[OPPORTUNITIES]\n      ,[PERC_IN_SPEC]\n      ,[EnteredDateTime]\n  FROM [Staging].[PhyChem_Data]\n  WHERE MaxEnteredDateTime > '@{activity('Lkp_OldEnteredDate').output.firstRow.MaxEnteredDateTime}'",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
