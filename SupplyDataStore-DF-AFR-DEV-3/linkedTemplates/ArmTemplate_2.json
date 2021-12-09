@@ -13,7 +13,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_BCI_Orchestrate_remote')]",
+			"name": "[concat(parameters('factoryName'), '/PL_PhysChem_Orchestrate_remote')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -25,7 +25,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "PL_BCIETL1",
+								"referenceName": "PL_PhysChemETL1",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -46,7 +46,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "PL_BCIETL2",
+								"referenceName": "PL_PhysChemETL2",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -81,7 +81,7 @@
 							"method": "POST",
 							"headers": {},
 							"body": {
-								"value": "{\"Output\":{\"InputParam\":\"BCI - Completed Successfully\"},\"StatusCode\":\"200\"}",
+								"value": "{\"Output\":{\"InputParam\":\"Physchem - Completed Successfully\"},\"StatusCode\":\"200\"}",
 								"type": "Expression"
 							}
 						}
@@ -120,7 +120,7 @@
 							"method": "POST",
 							"headers": {},
 							"body": {
-								"value": "{\"Output\":{\"InputParam\":\"BCI - Operation Failed\"},\"StatusCode\":\"501\"}",
+								"value": "{\"Output\":{\"InputParam\":\"Physchem - Operation Failed\"},\"StatusCode\":\"501\"}",
 								"type": "Expression"
 							}
 						}
