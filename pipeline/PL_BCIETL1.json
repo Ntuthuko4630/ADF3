@@ -63,7 +63,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_scrPhysChem_ALR",
+						"referenceName": "ds_scrBCI_ALR",
 						"type": "DatasetReference"
 					}
 				],
