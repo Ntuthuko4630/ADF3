@@ -66,7 +66,7 @@
 		],
 		"typeProperties": {
 			"schema": "Staging",
-			"table": "PhyChem_ROS"
+			"table": "BCI_ROS"
 		}
 	}
 }
