@@ -66,7 +66,7 @@
 		],
 		"typeProperties": {
 			"schema": "Staging",
-			"table": "PhyChem_ALR"
+			"table": "BCI_ALR"
 		}
 	}
 }
