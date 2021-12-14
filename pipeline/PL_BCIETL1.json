@@ -200,7 +200,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[spPhyschem_Index]",
+						"sqlReaderStoredProcedureName": "[dbo].[spZ_BCI]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
